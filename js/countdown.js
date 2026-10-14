@@ -1,0 +1,6 @@
+(() => {
+const container=document.getElementById("countdown"),clock=document.getElementById("liveClock");if(!container&&!clock)return;
+const target=container?new Date(container.dataset.event).getTime():0,pad=n=>String(n).padStart(2,"0");
+function update(){const now=Date.now();if(container){let d=Math.max(0,target-now);const days=Math.floor(d/86400000);d%=86400000;const hours=Math.floor(d/3600000);d%=3600000;const minutes=Math.floor(d/60000);d%=60000;const seconds=Math.floor(d/1000);Object.entries({days:String(days).padStart(3,"0"),hours:pad(hours),minutes:pad(minutes),seconds:pad(seconds)}).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v});if(target<=now){const h=document.querySelector("h1");if(h)h.textContent=window.GENESIS?.lang==="fa"?"رویداد آغاز شده است":"The Event Has Started"}}if(clock){const n=new Date();clock.textContent=new Intl.DateTimeFormat(undefined,{hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(n);const date=document.getElementById("liveDate");if(date)date.textContent=new Intl.DateTimeFormat(window.GENESIS?.lang==="fa"?"fa-IR":undefined,{weekday:"short",day:"numeric",month:"short",year:"numeric"}).format(n)}}
+update();setInterval(update,1000);
+})();
